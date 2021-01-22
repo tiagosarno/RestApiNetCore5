@@ -50,6 +50,30 @@ namespace RestApiNetCore5.Controllers
             return BadRequest("Invalid Input");
         }
 
+        [HttpGet("avg/{firstNumber}/{secondNumber}")]
+        public IActionResult Avg(string firstNumber, string secondNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var sum = (ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber)) / 2;
+                return Ok(sum.ToString());
+            }
+
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("square/{firstNumber}")]
+        public IActionResult Square(string firstNumber)
+        {
+            if (IsNumeric(firstNumber))
+            {
+                var Square = Math.Sqrt((double)ConvertToDecimal(firstNumber));
+                return Ok(Square.ToString());
+            }
+
+            return BadRequest("Invalid Input");
+        }
+
         private bool IsNumeric(string strNumber)
         {
             double number;

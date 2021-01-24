@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestApiNetCore5.Model.Context;
 using RestApiNetCore5.Services;
 using RestApiNetCore5.Services.Implementations;
 using System;
@@ -29,6 +31,10 @@ namespace RestApiNetCore5
         {
 
             services.AddControllers();
+
+            // Geting the string connection
+            var connection = Configuration["MySQLConnection:MySQLConnectionString"];
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
             // Dependency Injection
             services.AddScoped<IPersonService, PersonServiceImplementation>();
